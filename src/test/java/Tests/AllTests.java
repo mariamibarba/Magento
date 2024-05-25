@@ -11,6 +11,7 @@ import POM.Utils.GenerateRandom;
 import POM.Utils.Waits;
 import POM.Utils.WebDriverManager;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Stories;
 import io.qameta.allure.Story;
 import org.openqa.selenium.WebElement;
@@ -31,7 +32,8 @@ public class AllTests extends ConfigTest{
     MyAccauntPage myAccauntPage = new MyAccauntPage();
 
     @Test(groups = "positive", priority = 1)
-    @Story("USER POSITIVE REGISTRATION CASE")
+    @Story("positive registration case")
+    @Feature("Create an account rendom mail, Check it and log out ")
     public void userRegistration() throws InterruptedException, IOException {
         HomePageSteps homeSteps = new HomePageSteps();
         RegistrationPageSteps registerSteps = new RegistrationPageSteps();
@@ -58,7 +60,9 @@ public class AllTests extends ConfigTest{
 
 
     @Test(groups ="negative", priority = 2)
-    @Story("USER NEGATIVE REGISTRATIONCASE")
+    @Story("Negatve registration")
+    @Feature("Create an account used mail, Check it ")
+
 
     public void userRegistration2() throws InterruptedException, IOException {
         HomePageSteps homeSteps = new HomePageSteps();
@@ -79,45 +83,11 @@ public class AllTests extends ConfigTest{
         Assert.assertFalse(registrationPage.asserTests().isEmpty(), "არსებული მეილი გამოყენებულია");
 
     }
-    @Test(groups = "negative",priority = 4)
-    @Story("SEARCH ITEMS, SORT AND ADD A WISHLIST WHEN YOU ARENNT LOGIN")
 
-    public void searchItems() throws InterruptedException {
-        homePage.sendTextToSearch(data.get("SearchWord").asText());
-
-        Waits.waitUnits(homePage.searchInput, WebDriverManager.getDriver(),3);
-        productPageSteps
-                .sortByPriceLowToHigh();
-
-
-        List<WebElement> prices = productPageSteps.getProductPrices();
-
-        Assert.assertTrue(prices.size() > 1,
-                "There should be more than one product.");
-
-
-        for (int i = 1; i < prices.size()-1; i++) {
-            double previousPrice = Double.parseDouble(prices.get(i+1).getText());
-            double currentPrice =Double.parseDouble(prices.get(i).getText());
-            Assert.assertTrue(previousPrice <= currentPrice,
-                    "Prices are not sorted correctly: " + previousPrice + " > " + currentPrice);
-
-            previousPrice = currentPrice;
-        }
-
-        productPage.getProductList().get(0).click();
-
-        productPage.addToWishlist();
-        Assert.assertTrue(productPage.dontaddProcuctWishList(), "You must login or register to add items to your wishlist.");
-
-
-        Waits.waitUnits(homePage.searchInput, WebDriverManager.getDriver(),3);
-
-
-    }
 
     @Test(groups = "positive",priority = 3)
     @Story(" ITEM has been added to your Wish List")
+    @Feature("serch products, filter by price, choose first product and add in whishlist, next check it ")
     public void searchItemsSuccssesfuladdtoWishlist()  {
         homeSteps.
                 clickCreateAccount();
@@ -159,8 +129,48 @@ public class AllTests extends ConfigTest{
         Assert.assertTrue(productPage.addProcuctWishList(), "Adrienne Trek Jacket has been added to your Wish List. Click here to continue shopping.");
 
     }
+
+    @Test(groups = "negative",priority = 4)
+    @Story("Add product in whishist when user is not log in")
+    @Feature("serch products, filter by price, choose first product and add in whishlist, " +
+            "but you You must login or register to add items to your wishlist ")
+    public void searchItems()  {
+        homePage.sendTextToSearch(data.get("SearchWord").asText());
+
+        Waits.waitUnits(homePage.searchInput, WebDriverManager.getDriver(),3);
+        productPageSteps
+                .sortByPriceLowToHigh();
+
+
+        List<WebElement> prices = productPageSteps.getProductPrices();
+
+        Assert.assertTrue(prices.size() > 1,
+                "There should be more than one product.");
+
+
+        for (int i = 1; i < prices.size()-1; i++) {
+            double previousPrice = Double.parseDouble(prices.get(i+1).getText());
+            double currentPrice =Double.parseDouble(prices.get(i).getText());
+            Assert.assertTrue(previousPrice <= currentPrice,
+                    "Prices are not sorted correctly: " + previousPrice + " > " + currentPrice);
+
+            previousPrice = currentPrice;
+        }
+        productPage.getProductList().get(0).click();
+
+        productPage.addToWishlist();
+        Assert.assertTrue(productPage.dontaddProcuctWishList(), "You must login or register to add items to your wishlist.");
+
+
+        Waits.waitUnits(homePage.searchInput, WebDriverManager.getDriver(),3);
+
+
+    }
+
     @Test(groups = "positive",priority = 5)
-    @Story(" ITEM has been added to cart")
+    @Story(" Add product to the cart")
+    @Feature("navigate to Tops and sort product by price, choose first item check all filds and click add cart button" +
+            "next check if product added successfully ")
 
 
     public void addCart() throws InterruptedException {
@@ -206,7 +216,9 @@ public class AllTests extends ConfigTest{
 
 
     @Test(groups = "negative" , priority = 6)
-    @Story(" ITEM hasnot been added to cart")
+    @Story("The product could not be added to the cart")
+    @Feature("navigate to Tops and sort product by price, choose first item check all filds except quantity and click add cart button" +
+            "next check if product could not be added to the cart successfully ")
 
     public void addCartByIncorrectData() throws InterruptedException {
         HomePageSteps homeSteps = new HomePageSteps();
