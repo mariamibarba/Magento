@@ -9,4 +9,4 @@ allure-results/
 *.ipr
 *.iml
 *.iws
-.Ds_Store/
+*.DS_Store/
