@@ -31,7 +31,7 @@ public class AllTests extends ConfigTest{
     RegistrationPageSteps registerSteps = new RegistrationPageSteps();
     MyAccauntPage myAccauntPage = new MyAccauntPage();
 
-    @Test(groups = "positive", priority = 1)
+    @Test(priority = 0,groups = "positive")
     @Story("positive registration case")
     @Feature("Create an account rendom mail, Check it and log out ")
     public void userRegistration() throws InterruptedException, IOException {
@@ -59,7 +59,7 @@ public class AllTests extends ConfigTest{
 
 
 
-    @Test(groups ="negative", priority = 2)
+    @Test(groups ="negative", priority = 0)
     @Story("Negatve registration")
     @Feature("Create an account used mail, Check it ")
 
@@ -85,7 +85,7 @@ public class AllTests extends ConfigTest{
     }
 
 
-    @Test(groups = "positive",priority = 3)
+    @Test(groups = "positive", priority = 2)
     @Story(" ITEM has been added to your Wish List")
     @Feature("serch products, filter by price, choose first product and add in whishlist, next check it ")
     public void searchItemsSuccssesfuladdtoWishlist()  {
@@ -130,7 +130,7 @@ public class AllTests extends ConfigTest{
 
     }
 
-    @Test(groups = "negative",priority = 4)
+    @Test(groups = "negative", priority = 2)
     @Story("Add product in whishist when user is not log in")
     @Feature("serch products, filter by price, choose first product and add in whishlist, " +
             "but you You must login or register to add items to your wishlist ")
@@ -167,7 +167,7 @@ public class AllTests extends ConfigTest{
 
     }
 
-    @Test(groups = "positive",priority = 5)
+    @Test(groups = "positive", priority = 1)
     @Story(" Add product to the cart")
     @Feature("navigate to Tops and sort product by price, choose first item check all filds and click add cart button" +
             "next check if product added successfully ")
@@ -215,7 +215,7 @@ public class AllTests extends ConfigTest{
     }
 
 
-    @Test(groups = "negative" , priority = 6)
+    @Test(groups = "negative", priority = 2)
     @Story("The product could not be added to the cart")
     @Feature("navigate to Tops and sort product by price, choose first item check all filds except quantity and click add cart button" +
             "next check if product could not be added to the cart successfully ")

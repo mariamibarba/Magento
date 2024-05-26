@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class ConfigTest {
     protected JsonNode data;
-    @BeforeTest
+    @BeforeClass(groups = {"positive", "negative"})
     @Story("Opening url for all tests")
     @Description("Maximize browsers windows")
     public void setup() throws IOException {
@@ -21,7 +21,7 @@ public class ConfigTest {
     }
 
 
-    @AfterTest
+    @AfterSuite(groups = {"positive", "negative"})
     public void teardown() {
         WebDriverManager.getDriver().quit();
 
